@@ -1,5 +1,5 @@
 resource "aws_security_group" "elb" {
-  name = "terraform-example-elb"
+  name = "terraform-example-elb-${terraform.workspace}"
 
   ingress {
     from_port   = 80
@@ -17,18 +17,16 @@ resource "aws_security_group" "elb" {
 }
 
 resource "aws_security_group" "instance" {
-  name = "terraform-example-instance"
+  name = "terraform-example-instance-${terraform.workspace}"
 
   ingress {
-    from_port = "${var.server_port}"
-    to_port = "${var.server_port}"
-    protocol = "tcp"
+    from_port   = "${var.server_port}"
+    to_port     = "${var.server_port}"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  
+
   lifecycle {
     create_before_destroy = true
   }
 }
-
-

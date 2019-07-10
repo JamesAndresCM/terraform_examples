@@ -1,12 +1,12 @@
 resource "aws_elb" "example" {
-  name = "terraform-asg-example"
+  name               = "awselb-asg-${terraform.workspace}"
   availability_zones = ["${data.aws_availability_zones.all.names[0]}"]
   security_groups    = ["${aws_security_group.elb.id}"]
 
   listener {
-    lb_port = 80
-    lb_protocol = "http"
-    instance_port = "${var.server_port}"
+    lb_port           = 80
+    lb_protocol       = "http"
+    instance_port     = "${var.server_port}"
     instance_protocol = "http"
   }
 
